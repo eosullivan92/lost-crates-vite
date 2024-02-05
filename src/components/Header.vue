@@ -1,0 +1,113 @@
+<script setup lang="ts">
+import Nav from './Nav.vue';
+import { useCartStore } from '../store/cart';
+
+const cartStore = useCartStore();
+console.log(cartStore.cartItems);
+</script>
+
+<template>
+	<header class="header">
+		<div class="header__heading-container">
+			<h1>The Lost Crates</h1>
+			<p class="heading__disclaimer">Disclaimer: not a real store</p>
+		</div>
+
+		<div class="header__nav">
+			<Nav></Nav>
+
+			<button class="header__cart-btn">
+				<img src="/icons/icon-shopping-cart.svg" alt="" />
+				<span class="cart-items">{{ cartStore.itemCount }}</span>
+			</button>
+		</div>
+	</header>
+</template>
+
+<style lang="sass" scoped>
+@use '../Sass/palette'
+@use '../Sass/typography'
+
+.header
+    position: sticky
+    top: 0px
+    // width: 100%
+    display: flex
+    align-items: center
+    justify-content: space-between
+    padding: 0.5em 2em
+    z-index: 2
+    transition: background-color 0.3s ease-in
+    background-color: #f7f7ff
+
+    &--active
+        background-color: palette.$lightest-grey
+        transition: background-color 0.3s ease-in
+
+
+    .header__heading-container
+        display: flex
+        flex-direction: column
+        gap: 2px
+
+        .header__heading
+            font: 100% typography.$font-hero
+            letter-spacing: 2px
+            opacity: 0
+            transition: opacity 0.3s ease-in
+            &--active
+                opacity: 1
+
+        .heading__disclaimer
+            font-size: 0.7rem
+            color: palette.$darker-grey
+
+    .header__nav
+        display: flex
+        gap: 1.5em
+
+        &--reverse
+            flex-direction: row-reverse
+
+        .header__nav-btn
+            outline-color: palette.$darker-grey
+            background: none
+            cursor: pointer
+            border: none
+
+            img
+                height: 30px
+                width: 30px
+
+        .header__cart-btn
+            border: 1.5px solid palette.$darkest-grey
+            outline-color: palette.$darker-grey
+            background: none
+            border-radius: 50%
+            aspect-ratio: 1/1
+            padding: 0px 12px
+            cursor: pointer
+            position: relative
+
+            img
+                height: 25px
+                width: 25px
+
+            .cart-items
+                background: palette.$darkest-grey
+                border-radius: 50%
+                color: palette.$lightest-grey
+                min-width: 15px
+                min-height: 15px
+                position: absolute
+                bottom: 0px
+                right: 0px
+                aspect-ratio: 1/1
+                transform: translate(25%, 25%)
+
+@media (max-width: 400px)
+    .header
+        .header__heading-container
+            .header__heading
+                font: 100% typography.$font-hero-sml
+</style>
