@@ -1,26 +1,27 @@
 <script setup lang="ts">
-import AlbumList from './components/AlbumList.vue';
 import Header from './components/Header.vue';
+import Cart from './components/Cart.vue';
 </script>
 
 <template>
 	<div class="container">
-		<router-view>
-			<Header />
-			<div class="store__container">
-				<AlbumList />
-			</div>
-		</router-view>
+		<Header />
+		<div class="store__container">
+			<router-view />
+		</div>
+		<Cart />
 	</div>
 </template>
 
 <style lang="sass" scoped>
 .container
-    min-height: 100vh
-    min-width: 100vw
+    height: 100%
+    width: 100vw
+    padding-bottom: 8em
 
     .store__container
         display: flex
         justify-content: center
         width: 100%
+        padding-top: 8em
 </style>

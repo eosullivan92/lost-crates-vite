@@ -5,6 +5,7 @@ import { CartPayload, CartState } from '../types';
 export const useCartStore = defineStore('cart', {
 	state: (): CartState => ({
 		cartItems: [],
+		isCartVisible: false,
 	}),
 	getters: {
 		itemCount: (state) => state.cartItems.length,
@@ -15,6 +16,9 @@ export const useCartStore = defineStore('cart', {
 			),
 	},
 	actions: {
+		toggleCart() {
+			this.isCartVisible = !this.isCartVisible;
+		},
 		addToCart(item: CartPayload) {
 			const existingItem = this.cartItems.find(
 				(cartItem) => cartItem.id === item.id

@@ -5,32 +5,13 @@
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
 import Album from './Album.vue';
-import { music } from '../../public/music-store';
-import { images } from '../../public/images-store';
-import { AlbumInfo, AlbumImages } from '../types';
+import { useMusicStore } from '../store/music';
+
+const musicStore = useMusicStore();
 
 //refs
-const albums = ref<AlbumInfo[]>(music);
-const imgs = ref<AlbumImages[]>(images);
-
-// computed
-const albumsWithImages = computed(() => {
-	return albums.value.map((album) => {
-		// Find the image that matches the album by id
-		const images = imgs.value.map((img) =>
-			img.product_id === album.id ? img.path : undefined
-		);
-
-		const filteredImages = images.filter((image) => image !== undefined);
-		// Return a new object that combines the album info with its image
-		return {
-			...album,
-			images: filteredImages,
-		};
-	});
-});
+const albumsWithImages = musicStore.getAlbumsWithImages;
 </script>
 
 <style scoped lang="sass">

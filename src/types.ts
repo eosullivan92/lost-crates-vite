@@ -21,6 +21,11 @@ export interface AlbumWithImage extends AlbumInfo {
 	images: (string | undefined)[];
 }
 
+export interface MusicState {
+	albums: AlbumInfo[];
+	images: AlbumImages[];
+}
+
 export interface CartPayload {
 	id: number;
 	artist: string;
@@ -34,4 +39,5 @@ export interface CartItem extends CartPayload {
 
 export interface CartState {
 	cartItems: CartItem[];
+	isCartVisible: boolean;
 }

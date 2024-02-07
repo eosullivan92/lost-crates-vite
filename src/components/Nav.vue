@@ -20,16 +20,18 @@
     display: flex
     gap: 1.5em
     align-items: center
-
+    padding-left: 5%
 
     .nav__items
         display: flex
         gap: 1.5em
+        padding: 0
 
         .nav__item
             list-style: none
             position: relative
             cursor: pointer
+
 
             &::after
                 content: ''
@@ -37,13 +39,14 @@
                 bottom: -5px
                 display: block
                 height: 2px
-                background: palette.$darkest-grey
+                background: palette.$tertiary
                 transition: width 0.3s ease 0s, left 0.3s ease 0s
                 width: 0
                 left:50%
 
             & a
                 outline-color: palette.$darker-grey
+                color: palette.$primary
 
 
             &:hover:after

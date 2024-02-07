@@ -3,13 +3,13 @@ import { createPinia } from 'pinia';
 import './style.css';
 import App from './App.vue';
 import { createRouter, createWebHashHistory } from 'vue-router';
+import AlbumListVue from './components/AlbumList.vue';
+import HomeVue from './components/Home.vue';
 
-const Home = { template: '<div>Home</div>' };
-const Store = { template: '<div>Store</div>' };
-
+// Define your routes
 const routes = [
-	{ path: '/', component: Home },
-	{ path: '/store', component: Store },
+	{ path: '/', component: HomeVue },
+	{ path: '/store', component: AlbumListVue },
 ];
 
 const router = createRouter({
