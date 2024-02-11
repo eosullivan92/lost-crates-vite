@@ -1,17 +1,31 @@
 <template>
 	<div class="album__list">
-		<Album v-for="album in albumsWithImages" :key="album.id" :album="album" />
+		<div v-if="musicStore.loading">Loading albums...</div>
+		<Album
+			v-else
+			v-for="album in albumsWithImages"
+			:key="album.id"
+			:album="album"
+		/>
 	</div>
 </template>
 
 <script setup lang="ts">
 import Album from './Album.vue';
 import { useMusicStore } from '../store/music';
+import { computed, onMounted } from 'vue';
 
 const musicStore = useMusicStore();
 
-//refs
-const albumsWithImages = musicStore.getAlbumsWithImages;
+// computed
+const albumsWithImages = computed(() => musicStore.getAlbumsWithImages);
+
+// functions
+onMounted(async () => {
+	if (!musicStore.albums.length) {
+		await musicStore.fetchAlbums();
+	}
+});
 </script>
 
 <style scoped lang="sass">

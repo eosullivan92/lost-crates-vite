@@ -15,10 +15,7 @@
 		<div className="cart__total">
 			<p className="cart-total-price">Total: {{ cartStore.totalPrice }}</p>
 
-			<button
-				className="btn-secondary cart__btn"
-				:disabled="cartStore.itemCount > 0"
-			>
+			<button className="cart__btn" :disabled="cartStore.itemCount > 0">
 				Submit Order
 			</button>
 		</div>
@@ -88,4 +85,13 @@ function toggleCart() {
 
         .cart__btn
             margin-top: 1em
+            cursor: pointer
+            padding: 0.8em 1.2em
+            background: palette.$primary
+            border: none
+            border-radius: 18px
+            color: palette.$lightest-grey
+            transition: transform 800ms ease
+            &:hover
+                transform: scale(1.1)
 </style>

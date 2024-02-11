@@ -11,25 +11,13 @@
 		<div class="item-total">
 			<p class="price">${{ quantity * (item?.price || 0) }}</p>
 			<div class="quantity-control">
-				<!-- <button
-            class="quantity-btn"
-            onClick={() => handleDecreaseQuantity()}
-          >
-            -
-          </button> -->
+				<button class="quantity-btn" @click="handleDecreaseQuantity">-</button>
 				<div class="quantity-text">
 					<span class="quantity">{{ quantity }}</span> in cart
 				</div>
-				<!-- <button
-            class="quantity-btn"
-            onClick={() => handleIncreaseQuantity()}
-          >
-            +
-          </button> -->
+				<button class="quantity-btn" @click="handleIncreaseQuantity">+</button>
 			</div>
-			<!-- <button class="btn remove-btn" onClick={() => removeFromCart()}>
-          Remove
-        </button> -->
+			<button class="btn remove-btn" @click="removeFromCart">Remove</button>
 		</div>
 	</div>
 </template>
@@ -37,12 +25,29 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useMusicStore } from '../store/music';
+import { useCartStore } from '../store/cart';
 
-const { id, quantity } = defineProps<{ id: number; quantity: number }>();
+const { id } = defineProps<{ id: number; quantity: number }>();
 const musicStore = useMusicStore();
+const cartStore = useCartStore();
 
 //computed
 const item = computed(() => musicStore.getAlbumById(id));
+
+// TODO: Research why quantity as prop was not updating.
+const quantity = computed(() => cartStore.itemQuantity(id));
+
+//methods
+const removeFromCart = () => {
+	cartStore.removeFromCart(id);
+};
+const handleDecreaseQuantity = () => {
+	console.log(quantity);
+	cartStore.updateItemQuantity(id, -1);
+};
+const handleIncreaseQuantity = () => {
+	cartStore.updateItemQuantity(id, 1);
+};
 </script>
 
 <style lang="sass" scoped>

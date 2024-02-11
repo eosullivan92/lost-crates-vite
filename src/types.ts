@@ -24,6 +24,7 @@ export interface AlbumWithImage extends AlbumInfo {
 export interface MusicState {
 	albums: AlbumInfo[];
 	images: AlbumImages[];
+	loading: boolean;
 }
 
 export interface CartPayload {

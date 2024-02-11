@@ -14,6 +14,11 @@ export const useCartStore = defineStore('cart', {
 				(total, item) => total + item.price * item.quantity,
 				0
 			),
+		itemQuantity: (state) => (itemId: number) => {
+			const item = state.cartItems.find((item) => item.id === itemId);
+			// If the item exists, return its quantity; otherwise, return 0
+			return item ? item.quantity : 0;
+		},
 	},
 	actions: {
 		toggleCart() {
@@ -38,10 +43,12 @@ export const useCartStore = defineStore('cart', {
 			}
 		},
 		updateItemQuantity(itemId: number, quantity: number) {
-			const item = this.cartItems.find((item) => item.id === itemId);
-			if (item) {
-				item.quantity = quantity;
-			}
+			const updated = this.cartItems.map((item) =>
+				item.id === itemId
+					? { ...item, quantity: item.quantity + quantity }
+					: item
+			);
+			this.cartItems = updated;
 		},
 		clearCart() {
 			this.cartItems = [];

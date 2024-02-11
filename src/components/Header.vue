@@ -111,7 +111,7 @@ onBeforeUnmount(() => {
         img
             height: 25px
             width: 25px
-            filter: invert(25%) sepia(27%) saturate(394%) hue-rotate(348deg) brightness(93%) contrast(85%)
+            filter: invert(10%) sepia(98%) saturate(7385%) hue-rotate(256deg) brightness(82%) contrast(120%)
 
         .cart-items
             background: palette.$tertiary
