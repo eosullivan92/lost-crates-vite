@@ -15,6 +15,7 @@
 
 <style lang="sass" scoped>
 @use '../Sass/palette'
+@use '../Sass/typography'
 
 .nav
     display: flex
@@ -31,6 +32,8 @@
             list-style: none
             position: relative
             cursor: pointer
+            font: 100% typography.$font-serif
+            font-size: 1.2rem
 
 
             &::after

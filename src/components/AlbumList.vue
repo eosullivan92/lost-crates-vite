@@ -1,6 +1,6 @@
 <template>
 	<div class="album__list">
-		<div v-if="musicStore.loading">Loading albums...</div>
+		<Loader v-if="musicStore.loading" />
 		<Album
 			v-else
 			v-for="album in albumsWithImages"
@@ -12,6 +12,7 @@
 
 <script setup lang="ts">
 import Album from './Album.vue';
+import Loader from './Loader.vue';
 import { useMusicStore } from '../store/music';
 import { computed, onMounted } from 'vue';
 

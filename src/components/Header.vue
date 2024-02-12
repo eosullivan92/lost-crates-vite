@@ -1,8 +1,10 @@
 <template>
-	<header class="header" :class="{ hidden: !showNavbar }">
+	<header class="header" :class="{ stuck: sticky }">
 		<Nav></Nav>
 
-		<h1 class="header__heading">The Lost Crates<span class="blue">.</span></h1>
+		<h1 class="header__heading" :class="{ stuck: sticky }">
+			The Lost Crates<span class="blue">.</span>
+		</h1>
 
 		<button class="header__cart-btn" @click="toggleCart">
 			<img src="/icons/icon-shopping-cart.svg" alt="" />
@@ -14,44 +16,15 @@
 <script setup lang="ts">
 import Nav from './Nav.vue';
 import { useCartStore } from '../store/cart';
-import { onBeforeUnmount, onMounted, ref } from 'vue';
+// import { onBeforeUnmount, onMounted, ref } from 'vue';
 
 const cartStore = useCartStore();
-
-// refs
-const showNavbar = ref(true);
-const lastScrollPosition = ref(0);
+const { sticky } = defineProps<{ sticky: boolean }>();
 
 // methods
 function toggleCart() {
 	cartStore.toggleCart();
 }
-
-// methods
-function onScroll() {
-	// Get the current scroll position
-	const currentScrollPosition =
-		window.scrollY || document.documentElement.scrollTop;
-	// Because of momentum scrolling on mobiles, we shouldn't continue if it is less than zero
-	if (currentScrollPosition < 0) {
-		return;
-	}
-	if (Math.abs(currentScrollPosition - lastScrollPosition.value) < 60) {
-		return;
-	}
-	// Here we determine whether we need to show or hide the navbar
-	showNavbar.value = currentScrollPosition < lastScrollPosition.value;
-	// Set the current scroll position as the last scroll position
-	lastScrollPosition.value = currentScrollPosition;
-}
-// hooks
-onMounted(() => {
-	window.addEventListener('scroll', onScroll);
-});
-
-onBeforeUnmount(() => {
-	window.removeEventListener('scroll', onScroll);
-});
 </script>
 
 <style lang="sass" scoped>
@@ -59,30 +32,38 @@ onBeforeUnmount(() => {
 @use '../Sass/typography'
 
 .header
-    position: fixed
+    position: sticky
     top: 0px
     width: 100%
     display: flex
     align-items: center
     justify-content: space-between
-    padding: 0.5em 0em
     z-index: 2
-    transition: transform 0.3s ease-in
-    background-color: palette.$secondary
+    transition: background-color 0.3s ease-in
+    background-color: transparent
 
-    &.hidden
-        transform: translate3d(0, -100%, 0)
-        transition: transform 0.3s ease-in
+    &.stuck
+        padding: 0.5em 0em
+        background-color: palette.$secondary
+        transition: background-color 0.3s ease-in
+
+    // &.hidden
+    //     transform: translate3d(0, -100%, 0)
+    //     transition: transform 0.3s ease-in
 
     .header__heading
         font: 100% typography.$font-hero
-        font-size: 3rem
         letter-spacing: -5px
         color: palette.$primary
         // opacity: 0
-        transition: opacity 0.3s ease-in
-        &--active
-            opacity: 1
+        font-size: 3rem
+        transition: opacity 0.4s ease
+        transition: font-size 0.4s ease
+        &.stuck
+            font-size: 2rem
+            letter-spacing: -3px
+            transition: opacity 0.4s ease
+            transition: font-size 0.4s ease
 
         span
             color: palette.$tertiary
@@ -103,14 +84,14 @@ onBeforeUnmount(() => {
         background: none
         border-radius: 50%
         aspect-ratio: 1/1
-        padding: 0px 12px
+        padding: 0px 8px
         cursor: pointer
         position: relative
         margin-right: 5%
 
         img
-            height: 25px
-            width: 25px
+            height: 20px
+            width: 20px
             filter: invert(10%) sepia(98%) saturate(7385%) hue-rotate(256deg) brightness(82%) contrast(120%)
 
         .cart-items
